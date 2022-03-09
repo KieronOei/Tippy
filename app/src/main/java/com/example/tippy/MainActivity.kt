@@ -1,7 +1,6 @@
 package com.example.tippy
 
 import android.animation.ArgbEvaluator
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,10 +8,12 @@ import android.util.Log
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 
 private const val TAG = "MainActivity"
 private const val INITIAL_TIP_PERCENT = 15
+
 class MainActivity : AppCompatActivity() {
     private lateinit var etBaseAmount: EditText
     private lateinit var etSplitNumber: EditText
@@ -40,9 +41,9 @@ class MainActivity : AppCompatActivity() {
         seekBarTip.progress = INITIAL_TIP_PERCENT
         tvTipPercentLabel.text = "$INITIAL_TIP_PERCENT%"
         updateTipDescription(INITIAL_TIP_PERCENT)
-        seekBarTip.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+        seekBarTip.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                Log.i(TAG,"onProgressChanged $p1")
+                Log.i(TAG, "onProgressChanged $p1")
                 tvTipPercentLabel.text = "$p1%"
                 computeTipAndTotal()
                 updateTipDescription(p1)
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-        etBaseAmount.addTextChangedListener(object:TextWatcher{
+        etBaseAmount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        etSplitNumber.addTextChangedListener(object:TextWatcher{
+        etSplitNumber.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
@@ -84,7 +85,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                Log.i(TAG,"afterTextChanged_etSplitNumber $p0")
+                Log.i(TAG, "afterTextChanged_etSplitNumber $p0")
                 computeIndividual()
             }
 
@@ -117,7 +118,7 @@ class MainActivity : AppCompatActivity() {
         val color = ArgbEvaluator().evaluate(
             tipPercent.toFloat() / seekBarTip.max,
             ContextCompat.getColor(this, R.color.color_worst_tip),
-            ContextCompat.getColor(this,R.color.color_best_tip)
+            ContextCompat.getColor(this, R.color.color_best_tip)
         ) as Int
         tvTipDescription.setTextColor(color)
     }
@@ -147,7 +148,7 @@ class MainActivity : AppCompatActivity() {
 // 4. Replace the text describing the tip ("poor","good",etc) with emojis
 // 5. Improve the user interface through styling and coloring, e.g. change the text color, font,
 //    optimize the layout for different screens.
-// 6. Add pre-defined options for service (e.g poor, acceptable, good, excellenet) which automatically decide the tip percentage
+// 6. Add pre-defined options for service (e.g poor, acceptable, good, excellent)/**/ which automatically decide the tip percentage
 // 7. Show currency symbols, and allow the user to change their currency. Store the currency in SharedPreferences (refer to piazza doc for link)
 // 8. Add another screen to the app where you can see tips made in the past. Use intents to add another screen to your app (refer to piazza doc for link)
 
