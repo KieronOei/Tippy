@@ -31,7 +31,7 @@ GIF created with gifs.com & recorded using bandicam
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Rounding total amount to nearest integer using up or down buttons is posing some issues. TODO was placed thats why app crashes when button is pressed
 
 ## License
 
