@@ -4,7 +4,7 @@
 
 **Tippy** computes the tip and total amount for a bill. The app uses the base amount and tip percentage to calculate the amount owed, and it also describes the quality of service based on the tip.
 
-Time spent: **5** hours spent in total
+Time spent: **8** hours spent in total
 
 ## Functionality
 
@@ -19,6 +19,7 @@ The following **extensions** are implemented:
 
 * [ ] Custom colors palette selected
 * [x] Added 'Split bill by N people' function
+* [ ] Round total amount to nearest integer using up and down buttons
 
 ## Video Walkthrough
 
