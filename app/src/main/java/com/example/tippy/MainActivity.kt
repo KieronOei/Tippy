@@ -5,16 +5,24 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.widget.Button
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import java.lang.Math.ceil
+import java.lang.Math.floor
+import java.text.DecimalFormat
+import java.math.RoundingMode
+
 
 private const val TAG = "MainActivity"
 private const val INITIAL_TIP_PERCENT = 15
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var btnDown: Button
+    private lateinit var btnUp: Button
     private lateinit var etBaseAmount: EditText
     private lateinit var etSplitNumber: EditText
     private lateinit var seekBarTip: SeekBar
@@ -28,6 +36,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        btnDown = findViewById(R.id.btnDown)
+        btnUp = findViewById(R.id.btnUp)
         etBaseAmount = findViewById(R.id.etBaseAmount)
         etSplitNumber = findViewById(R.id.etSplitNumber)
         seekBarTip = findViewById(R.id.seekBarTip)
@@ -91,6 +101,45 @@ class MainActivity : AppCompatActivity() {
 
         })
 
+        btnDown.setOnClickListener{
+            // 1. Calculate values
+            val totalAmount = tvTotalAmount.text.toString().toDouble()
+            val baseAmount = etBaseAmount.text.toString().toDouble()
+            val newAmount = floor(totalAmount)
+            val df = DecimalFormat("#.##")
+            df.roundingMode = RoundingMode.CEILING
+            var newTipAmount = newAmount - baseAmount
+            newTipAmount = df.format(newTipAmount).toDouble()
+            Log.d(TAG, "newAmount" + newAmount.toString())
+            Log.d(TAG, "baseAmount" + baseAmount.toString())
+            Log.d(TAG, "newTipAmount" + newTipAmount.toString())
+            val newPercentage = newTipAmount / baseAmount * 100
+
+            // 2. Update values on screen
+            tvTotalAmount.text = newAmount.toString()
+            tvTipAmount.text = newTipAmount.toString()
+            seekBarTip.progress = newPercentage.toInt()
+            tvTipPercentLabel.text = "%.2f".format(newPercentage)
+
+            TODO("ROUNDING ERROR CAUSING ME A HEADACHE LINES 106-116")
+        }
+
+        btnUp.setOnClickListener{
+            // 1. Calculate values
+            val totalAmount = tvTotalAmount.text.toString().toDouble()
+            val baseAmount = etBaseAmount.text.toString().toDouble()
+            val newAmount = ceil(totalAmount)
+
+            val newTipAmount = newAmount - baseAmount
+            val newPercentage = newTipAmount / baseAmount * 100
+
+            // 2. Update values on screen
+            tvTotalAmount.text = newAmount.toString()
+            tvTipAmount.text = newTipAmount.toString()
+            seekBarTip.progress = newPercentage.toInt()
+            tvTipPercentLabel.text = "%.2f".format(newPercentage)
+            TODO("ERROR FROM BTNDOWN SO CANNOT CONTINUE")
+        }
 
     }
 
@@ -141,9 +190,11 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
+
+
 // Extensions idea
 // 1. Split the bill by N people [DONE]
-// 2. Round the final amount up/down which should update the tip amount and percent automatically
+// 2. Round the final amount up/down which should update the tip amount and percent automatically [INCOMPLETE]
 // 3. Design/color updates
 // 4. Replace the text describing the tip ("poor","good",etc) with emojis
 // 5. Improve the user interface through styling and coloring, e.g. change the text color, font,
